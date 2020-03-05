@@ -1,4 +1,4 @@
-package ru.cbr.tomsk.dav.FilenetWebApplication.Service.Filenet;
+package ru.cbr.tomsk.dav.FilenetWebApplication.Filenet;
 
 import com.filenet.api.collection.ObjectStoreSet;
 import com.filenet.api.core.Connection;
@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -44,12 +43,12 @@ public class CPEConnection {
     private Connection connection;
     @Getter
     private Subject subject;
-
+    @Getter
     private UserContext userContext;
 
     @PostConstruct
     public void init(){
-        this.userContext = UserContext.get();
+
     }
 
     public void connect(String userName, String password, String uri, String stanza ){
@@ -61,12 +60,11 @@ public class CPEConnection {
     }
 
     public void connect(){
+        this.userContext = UserContext.get();
         this.connection = Factory.Connection.getConnection(uri);
         this.subject = UserContext.createSubject(connection, userName, password, stanza);
         this.userContext.pushSubject(subject);
         try {
-
-
             this.domain = Factory.Domain.fetchInstance(this.connection, null, null);
             this.objectStoreSet = domain.get_ObjectStores();
             this.isConnected = true;
@@ -88,7 +86,7 @@ public class CPEConnection {
 
 
     public boolean disconnect(){
-        this.userContext.popSubject();
+        this.userContext=null;
         isConnected = false;
         objectStoreSet = null;
         domain = null;

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
-import ru.cbr.tomsk.dav.FilenetWebApplication.Service.Filenet.CPEDocument;
+import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CPEDocument;
 
 import javax.annotation.PostConstruct;
 import javax.security.auth.Subject;

@@ -1,4 +1,4 @@
-package ru.cbr.tomsk.dav.FilenetWebApplication.Service.Filenet;
+package ru.cbr.tomsk.dav.FilenetWebApplication.Filenet;
 
 import com.filenet.api.collection.ContentElementList;
 import com.filenet.api.collection.DocumentSet;

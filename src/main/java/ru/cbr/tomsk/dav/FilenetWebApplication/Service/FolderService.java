@@ -3,13 +3,11 @@ package ru.cbr.tomsk.dav.FilenetWebApplication.Service;
 
 import com.filenet.api.core.Folder;
 import com.filenet.api.core.ObjectStore;
-import com.filenet.api.util.UserContext;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
-import ru.cbr.tomsk.dav.FilenetWebApplication.Service.Filenet.CPEConnection;
-import ru.cbr.tomsk.dav.FilenetWebApplication.Service.Filenet.CPEFolder;
+import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CPEFolder;
 
 import javax.annotation.PostConstruct;
 import javax.security.auth.Subject;

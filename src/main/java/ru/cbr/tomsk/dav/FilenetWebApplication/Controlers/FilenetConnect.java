@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.cbr.tomsk.dav.FilenetWebApplication.Service.DocumentService;
-import ru.cbr.tomsk.dav.FilenetWebApplication.Service.Filenet.CPEConnection;
+import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CPEConnection;
 import ru.cbr.tomsk.dav.FilenetWebApplication.Service.FolderService;
 
 import javax.annotation.PreDestroy;
@@ -20,10 +20,6 @@ public class FilenetConnect {
 
     @Autowired
     CPEConnection cpeConnection;
-
-//    @Autowired
-//    FolderCPE folderCPE;
-
     @Autowired
     DocumentService documentService;
     @Autowired
