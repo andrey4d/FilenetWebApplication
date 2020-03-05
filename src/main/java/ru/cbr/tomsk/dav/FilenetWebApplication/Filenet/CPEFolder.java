@@ -81,8 +81,8 @@ public class CPEFolder {
             Iterator<Folder> it = folderSet.iterator();
             while (it.hasNext()){
                 Folder folder = it.next();
-                String dir = root + folder.get_PathName() + "/";
-                stack.push(dir);
+                String dir = root + folder.get_FolderName() + "/";
+                stack.push(folder.get_PathName());
                 out.add(folder);
             }
         }
