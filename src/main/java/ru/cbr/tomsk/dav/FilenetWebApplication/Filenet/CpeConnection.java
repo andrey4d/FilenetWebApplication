@@ -21,7 +21,7 @@ import java.util.List;
 @Log4j
 @Service
 @NoArgsConstructor
-public class CPEConnection {
+public class CpeConnection {
 
 //    private static final Logger logger = LogManager.getLogger(CpeInfo.class);
     @Setter

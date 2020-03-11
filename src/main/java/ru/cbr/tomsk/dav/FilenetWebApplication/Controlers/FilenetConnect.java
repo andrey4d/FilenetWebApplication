@@ -1,13 +1,16 @@
 package ru.cbr.tomsk.dav.FilenetWebApplication.Controlers;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.cbr.tomsk.dav.FilenetWebApplication.Service.DocumentService;
-import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CPEConnection;
+import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CpeConnection;
 import ru.cbr.tomsk.dav.FilenetWebApplication.Service.FolderService;
+import ru.cbr.tomsk.dav.FilenetWebApplication.Service.ObjectStoreService;
 
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
@@ -19,11 +22,14 @@ import java.util.Map;
 public class FilenetConnect {
 
     @Autowired
-    CPEConnection cpeConnection;
+    CpeConnection cpeConnection;
     @Autowired
     DocumentService documentService;
     @Autowired
     FolderService folderService;
+    @Autowired
+    ObjectStoreService objectStoreService;
+
 
     @PreDestroy
     public void preDestroy(){
@@ -54,14 +60,6 @@ public class FilenetConnect {
         return out;
     }
 
-
-    @GetMapping(value = "/domain/ObjectStores")
-    public List<String> getObjectStrores(){
-        List<String> list = cpeConnection.getObjectStoreName();
-        if( list == null ) list.add("Not connected to CPE!");
-        return list;
-    }
-
     @GetMapping(value = "/domain/folders", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getFoldes(  @RequestParam(value = "root", defaultValue = "/") String rootPath,
                                     @RequestParam(value = "objectstore", defaultValue = "DOSTEST") String osName){
@@ -77,9 +75,9 @@ public class FilenetConnect {
     }
 
     @GetMapping(value = "/domain/folders/map", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String,String> getFoldesIdAndPath(   @RequestParam(value = "root", defaultValue = "/") String rootPath,
-                                                    @RequestParam(value = "objectstore", defaultValue = "DOSTEST") String osName){
-        Map<String,String> out = new HashMap<>();
+    public JSONObject getFoldesIdAndPath(   @RequestParam(value = "root", defaultValue = "/") String rootPath,
+                                            @RequestParam(value = "objectstore", defaultValue = "DOSTEST") String osName){
+        JSONObject out = new JSONObject();
         if(cpeConnection.isConnected()){
             folderService.setSubject(cpeConnection.getSubject());
             out = folderService.getAllSubFoldersWithIdAndName(cpeConnection.getObjectStoreByName(osName),rootPath);
@@ -104,4 +102,44 @@ public class FilenetConnect {
         }
         return out;
     }
+
+    @GetMapping(value = "/domain/objectstrores", produces = MediaType.APPLICATION_JSON_VALUE)
+    public JSONObject getObjectStores(){
+        JSONObject out = new JSONObject();
+        if(cpeConnection.isConnected()){
+            objectStoreService.setSubject(cpeConnection.getSubject());
+            out = objectStoreService.getObjectStoresIdAndName(cpeConnection.getDomain());
+        }
+        else{
+            out.put("ERROR","Not connected to CPE!");
+        }
+        return out;
+    }
+
+    @GetMapping(value = "/domain/objectstrore", produces = MediaType.APPLICATION_JSON_VALUE)
+    public JSONObject getObjectStoreByName(@RequestParam (value = "name", defaultValue = "DOSTEST") String osName){
+        JSONObject out = new JSONObject();
+        if(cpeConnection.isConnected()){
+            objectStoreService.setSubject(cpeConnection.getSubject());
+            out = objectStoreService.getObjectStoreIdByName(cpeConnection.getDomain(), osName);
+        }
+        else{
+            out.put("ERROR","Not connected to CPE!");
+        }
+        return out;
+    }
+
+    @GetMapping(value = "/domain/objectstrore/info", produces = MediaType.APPLICATION_JSON_VALUE)
+    public JSONObject getObjectStoreInfoByName(@RequestParam (value = "name", defaultValue = "DOSTEST") String osName){
+        JSONObject out = new JSONObject();
+        if(cpeConnection.isConnected()){
+            objectStoreService.setSubject(cpeConnection.getSubject());
+            out = objectStoreService.getObjectStoreInfo(cpeConnection.getDomain(), osName);
+        }
+        else{
+            out.put("ERROR","Not connected to CPE!");
+        }
+        return out;
+    }
+
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
-import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CPEDocument;
+import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CpeDocument;
 
 import javax.annotation.PostConstruct;
 import javax.security.auth.Subject;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Service
 @NoArgsConstructor
 public class DocumentService {
-    private CPEDocument cpeDocument = null;
+    private CpeDocument cpeDocument = null;
 
     @Setter
     @Getter
@@ -26,7 +26,7 @@ public class DocumentService {
 
     @PostConstruct
     public void init(){
-        cpeDocument = new CPEDocument();
+        cpeDocument = new CpeDocument();
     }
 
     public Map<String,String> getDocumentsIdAndName(ObjectStore objectStore, String rootPath){

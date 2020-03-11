@@ -6,8 +6,9 @@ import com.filenet.api.core.ObjectStore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
-import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CPEFolder;
+import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CpeFolder;
 
 import javax.annotation.PostConstruct;
 import javax.security.auth.Subject;
@@ -19,7 +20,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class FolderService {
 
-    private CPEFolder cpeFolder = null;
+    private CpeFolder cpeFolder = null;
 
     @Setter
     @Getter
@@ -27,7 +28,7 @@ public class FolderService {
 
     @PostConstruct
     public void init(){
-        cpeFolder = new CPEFolder();
+        cpeFolder = new CpeFolder();
     }
 
     public List<String> getAllSubFoldersInRoot(ObjectStore objectStore, String rootPath){
@@ -38,10 +39,10 @@ public class FolderService {
         return allSubFoldersNameFromPathRecurcive;
     }
 
-    public Map<String,String> getAllSubFoldersWithIdAndName(ObjectStore objectStore, String rootPath){
+    public JSONObject getAllSubFoldersWithIdAndName(ObjectStore objectStore, String rootPath){
         cpeFolder.createUserContext(subject);
         List<Folder> folderList = cpeFolder.getAllFolderFromPathStack(objectStore,rootPath);
-        Map<String,String> out = new HashMap<>();
+        JSONObject out = new JSONObject();
         for (Folder folder : folderList) {
             out.put(folder.get_Id().toString(),folder.get_PathName());
         }

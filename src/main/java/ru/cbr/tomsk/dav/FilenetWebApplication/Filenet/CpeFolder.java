@@ -7,11 +7,9 @@ import com.filenet.api.core.Folder;
 import com.filenet.api.core.ObjectStore;
 import com.filenet.api.exception.EngineRuntimeException;
 import com.filenet.api.exception.ExceptionCode;
-import com.filenet.api.util.UserContext;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-import javax.security.auth.Subject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,19 +17,7 @@ import java.util.Stack;
 
 @Log4j
 @NoArgsConstructor
-public class CPEFolder {
-
-    private UserContext userContext = null;
-
-    public void createUserContext(Subject subject){
-        userContext = UserContext.get();
-        userContext.pushSubject(subject);
-    }
-
-    public void rmUserContext(){
-        userContext.popSubject();
-        userContext=null;
-    }
+public class CpeFolder extends CpeIserContext{
 
     private String rootPath(String rootPath){
         if (!rootPath.endsWith("/")) rootPath += "/";

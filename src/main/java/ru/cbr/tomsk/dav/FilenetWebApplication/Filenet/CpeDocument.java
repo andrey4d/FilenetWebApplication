@@ -6,13 +6,10 @@ import com.filenet.api.constants.*;
 import com.filenet.api.core.*;
 import com.filenet.api.exception.EngineRuntimeException;
 import com.filenet.api.exception.ExceptionCode;
-import com.filenet.api.util.UserContext;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import ru.cbr.tomsk.dav.FilenetWebApplication.Constants;
 
-
-import javax.security.auth.Subject;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
@@ -20,19 +17,7 @@ import java.util.Date;
 
 @Log4j
 @NoArgsConstructor
-public class CPEDocument {
-
-    private UserContext userContext = null;
-
-    public void createUserContext(Subject subject){
-        userContext = UserContext.get();
-        userContext.pushSubject(subject);
-    }
-
-    public void rmUserContext(){
-        userContext.popSubject();
-        userContext=null;
-    }
+public class CpeDocument extends CpeIserContext{
 
     public Date getDate(int YYYY, int MM, int DD){
         Calendar calendar = Calendar.getInstance();
