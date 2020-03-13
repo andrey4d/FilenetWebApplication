@@ -1,14 +1,16 @@
 package ru.cbr.tomsk.dav.FilenetWebApplication.Controlers;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.cbr.tomsk.dav.FilenetWebApplication.Service.DocumentService;
+import org.springframework.web.servlet.ModelAndView;
 import ru.cbr.tomsk.dav.FilenetWebApplication.Filenet.CpeConnection;
+import ru.cbr.tomsk.dav.FilenetWebApplication.Service.DocumentService;
 import ru.cbr.tomsk.dav.FilenetWebApplication.Service.FolderService;
 import ru.cbr.tomsk.dav.FilenetWebApplication.Service.ObjectStoreService;
 
@@ -38,19 +40,27 @@ public class FilenetConnect {
     }
 
     @GetMapping(value = "/connect")
-    public boolean getConnection(@RequestParam(value = "username", defaultValue = "bootstrap") String username,
-                                 @RequestParam(value = "password", defaultValue = "password") String password,
-                                 @RequestParam(value = "host", defaultValue = "http://filenet06.dev.bench2.ppod.cbr.ru:9080") String host,
-                                 @RequestParam(value= "stanza", defaultValue = "FileNetP8") String stanza){
+    public ModelAndView getConnection(Model model,
+                                @RequestParam(value = "username", defaultValue = "bootstrap") String username,
+                                @RequestParam(value = "password", defaultValue = "password") String password,
+                                @RequestParam(value = "host", defaultValue = "http://filenet06.dev.bench2.ppod.cbr.ru:9080") String host,
+                                @RequestParam(value= "stanza", defaultValue = "FileNetP8") String stanza){
+        HashMap<Object, Object> data = new HashMap<>();
         String uri = host+"/wsi/FNCEWS40MTOM";
-        cpeConnection.connect(username,password, uri, stanza);
-        return cpeConnection.isConnected();
+        cpeConnection.connect(username, password, uri, stanza);
+        data.put("isConnected",cpeConnection.isConnected());
+        model.addAttribute("fromFilenetConnectData", data);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("connect");
+        return modelAndView;
     }
 
     @GetMapping(value = "/disconnect")
-    public boolean getConnection(){
+    public ModelAndView getConnection(){
         cpeConnection.disconnect();
-        return cpeConnection.isConnected();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        return modelAndView;
     }
 
     @GetMapping(value = "/domain/name")
@@ -103,7 +113,7 @@ public class FilenetConnect {
         return out;
     }
 
-    @GetMapping(value = "/domain/objectstrores", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/domain/objectstores", produces = MediaType.APPLICATION_JSON_VALUE)
     public JSONObject getObjectStores(){
         JSONObject out = new JSONObject();
         if(cpeConnection.isConnected()){
@@ -116,8 +126,8 @@ public class FilenetConnect {
         return out;
     }
 
-    @GetMapping(value = "/domain/objectstrore", produces = MediaType.APPLICATION_JSON_VALUE)
-    public JSONObject getObjectStoreByName(@RequestParam (value = "name", defaultValue = "DOSTEST") String osName){
+    @GetMapping(value = "/domain/objectstore", produces = MediaType.APPLICATION_JSON_VALUE)
+    public JSONObject getObjectStoreByName(@RequestParam (value = "objectstore", defaultValue = "DOSTEST") String osName){
         JSONObject out = new JSONObject();
         if(cpeConnection.isConnected()){
             objectStoreService.setSubject(cpeConnection.getSubject());
@@ -129,8 +139,8 @@ public class FilenetConnect {
         return out;
     }
 
-    @GetMapping(value = "/domain/objectstrore/info", produces = MediaType.APPLICATION_JSON_VALUE)
-    public JSONObject getObjectStoreInfoByName(@RequestParam (value = "name", defaultValue = "DOSTEST") String osName){
+    @GetMapping(value = "/domain/objectstore/info", produces = MediaType.APPLICATION_JSON_VALUE)
+    public JSONObject getObjectStoreInfoByName(@RequestParam (value = "objectstore", defaultValue = "DOSTEST") String osName){
         JSONObject out = new JSONObject();
         if(cpeConnection.isConnected()){
             objectStoreService.setSubject(cpeConnection.getSubject());

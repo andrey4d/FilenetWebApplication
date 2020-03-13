@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" href="index.css">
+    <title>Spring Security Example </title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script th:inline="javascript">
+        var frontendData = [[ ${fromtendData} ]];
+    </script>
+</head>
+
+<body>
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+<form th:action="@{/connect}" method="get">
+<!--    <div><label> User Name : <input type="text" name="login_username"/> </label></div>-->
+<!--    <div><label> Password  : <input type="password" name="login_password"/> </label></div>-->
+
+    <table>
+        <tr>
+            <td align="right" width="150"> Filenet host :</td>
+            <td>
+               <div id="cpe_host"> <input size="100" type="text" name="host" v-model="host"/> </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" width="150"> Filenet user : </td>
+            <td>
+                <div id="cpe_username"> <input type="text" name="username" v-model="user"/> </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" width="150">Filenet password : </td>
+            <td>
+                <div id="cpe_password"> <input type="password" name="password" v-model="password"/> </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="150"> Stanza : </td>
+            <td>
+                <div id="cpe_stanza"> <input type="text" name="stanza" v-model="stanza"/> </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="150">
+                <div> <input align="left" type="submit" value="Sign In"/> </div>
+            </td>
+
+        </tr>
+    </table>
+
+    <script src="index.js"></script>
+
+</form>
+</body>
+</html>

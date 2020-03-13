@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" href="index.css">
+    <title> Connect page </title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script th:inline="javascript">
+        var fromFilenetConnectData = [[ ${fromFilenetConnectData} ]];
+    </script>
+</head>
+<body>
+    <a href="/domain/name">Domain name. <br> </a>
+    <a href="/domain/objectstores"> ObjectStorages show. <br> </a>
+    <a href="/domain/objectstore/info?objectstore=DOSTEST"> ObjectStorage info. <br> </a>
+    <a href="/domain/folders?objectstore=DOSTEST&root=/dossier-ko/recognized_docs"> Show folders. <br> </a>
+    <a href="/domain/folders/map?objectstore=DOSTEST&root=/dossier-ko/recognized_docs"> Show folders with id. <br> </a>
+    <a href="/domain/folders/documents?objectstore=DOSTEST&root=/dossier-ko/lk_archive"> Show documents in folder. <br> </a>
+    <a href="/disconnect">Disconnect. <br> </a>
+</body>
+</html>
