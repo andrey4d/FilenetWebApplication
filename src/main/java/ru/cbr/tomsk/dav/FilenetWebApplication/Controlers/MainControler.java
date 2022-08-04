@@ -2,12 +2,14 @@ package ru.cbr.tomsk.dav.FilenetWebApplication.Controlers;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.HashMap;
 
@@ -41,6 +43,10 @@ public class MainControler {
         return "index";
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    public String connection(){
+        return "connect";
+    }
 
 }
 

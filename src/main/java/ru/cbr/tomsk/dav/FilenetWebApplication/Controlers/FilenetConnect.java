@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -53,6 +54,17 @@ public class FilenetConnect {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("connect");
         return modelAndView;
+    }
+
+    @PostMapping(value = "/connect")
+    public boolean getConnection( @RequestParam(value = "username", defaultValue = "bootstrap") String username,
+                                @RequestParam(value = "password", defaultValue = "password") String password,
+                                @RequestParam(value = "host", defaultValue = "http://filenet06.dev.bench2.ppod.cbr.ru:9080") String host,
+                                @RequestParam(value= "stanza", defaultValue = "FileNetP8") String stanza){
+        String uri = host+"/wsi/FNCEWS40MTOM";
+        cpeConnection.connect(username, password, uri, stanza);
+        boolean out = cpeConnection.isConnected();
+        return out;
     }
 
     @GetMapping(value = "/disconnect")

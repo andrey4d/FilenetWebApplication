@@ -24,16 +24,21 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+//	compile(group: 'org.springframework.boot', name: 'spring-boot-starter-validation')
 	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	// https://mvnrepository.com/artifact/javax.el/javax.el-api
+//	compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
 	compile "log4j:log4j:1.2.14"
 	compile "com.filenet:Jace:5.5.0"
 	compile "com.filenet:stax-api:5.5.0"
 	compile "com.filenet:xlxpScanner:5.5.0"
 	compile "com.filenet:xlxpScannerUtils:5.5.0"
 	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-	annotationProcessor 'org.projectlombok:lombok'
+
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 	testCompileOnly 'org.projectlombok:lombok'

@@ -25,3 +25,5 @@ var cpe_stanza = new Vue({
            stanza: frontendData.cpe_stanza
         }
     })
+
+
